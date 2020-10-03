@@ -4,7 +4,7 @@ import './Keyboard.scss'
 import {CapsLock,Space,Delete,Clear,Prev,Next,Enter} from './SVG.jsx'
 
 let upperCase = false
-let isLetters = true
+// let isLetters = true
 
 let letters = [
   'a',
@@ -72,49 +72,12 @@ let numbers = [
 ]
 
 const TVKeyboard = (props) => {
+  const [isLetters,setIsLetters] = useState(props.numbers ? false : true )
   //POSITION OF MOVER
   const [position, setPosition] = useState(0)
   const [writePosition, setWritePosition] = useState(props.value.length)
   //KEYS
-  const [keys, setKeys] = useState([
-    'a',
-    'b',
-    'c',
-    'd',
-    'e',
-    'f',
-    'g',
-    'h',
-    'i',
-    'j',
-    'k',
-    'l',
-    'm',
-    'n',
-    'o',
-    'p',
-    'q',
-    'r',
-    's',
-    't',
-    'u',
-    'v',
-    'w',
-    'x',
-    'y',
-    'z',
-    '!',
-    ',',
-    '.',
-    '@',
-  ])
-
-  useEffect(() => {
-    if (props.numbers) {
-      setKeys(numbers)
-      isLetters = false
-    }
-  }, [props.numbers])
+  const [keys, setKeys] = useState(props.numbers ? numbers : letters)
 
   useEffect(() => {
     const mover = (e) => {
@@ -200,7 +163,7 @@ const TVKeyboard = (props) => {
     } else {
       setKeys(letters)
     }
-    isLetters = !isLetters
+    setIsLetters(p => !p)
   }
 
   const transformKeys = () => {
@@ -276,9 +239,9 @@ const TVKeyboard = (props) => {
               key={0}
               style={{
                 background:
-                  position === 30
+                  position === 30 
                     ? props.colors[2]
-                    : props.colors[1] + 'bb',
+                    : isLetters ? props.colors[1] + 'bb' : props.colors[1] + "33",
               }}
               onClick={() => actions(0)}
               onMouseOver={() => setPosition(30)}
