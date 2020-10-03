@@ -158,7 +158,7 @@ const TVKeyboard = (props) => {
           else if (position === 33) setPosition(27)
           else if (position === 32) setPosition(24)
           else if (position === 31) setPosition(22)
-          else if (position > 9) setPosition((p) => p - 10)
+          else if (position > 9 && position !== 100) setPosition((p) => p - 10)
           else setPosition(100)
           break
         //ENTER
