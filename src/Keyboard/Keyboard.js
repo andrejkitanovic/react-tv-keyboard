@@ -59,7 +59,6 @@ let numbers = [
   '#',
   '+',
   '"',
-  // `@`,
   '$',
   '%',
   '&',
@@ -242,6 +241,7 @@ const TVKeyboard = (props) => {
       key={key}
       style={{
         background: position === index ? props.colors[2] : props.colors[1],
+        fontSize:'25px'
       }}
       onMouseOver={() => setPosition(index)}
       onClick={() => addToText(key)}
@@ -272,7 +272,6 @@ const TVKeyboard = (props) => {
 
           <div className="keypads">
             {keypads}
-            {/* {mainKeypads} */}
             <div
               key={0}
               style={{
@@ -300,7 +299,7 @@ const TVKeyboard = (props) => {
               onMouseOver={() => setPosition(31)}
               className='key'
             >
-              123
+              {isLetters ? "123" : "abc"}
             </div>
             <div
               key={2}
