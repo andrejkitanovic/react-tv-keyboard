@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.scss";
+
+import Keyboard from "./Keyboard/Keyboard";
 
 function App() {
+  const [text, setText] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const textHandler = (property) => {
+    setText(property);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={() => setShowModal(true)}>Open Modal</button>
+      <h1 style={{ textAlign: "center" }}>{text}</h1>
+      {showModal ? (
+        <Keyboard
+          colors={["#282828", "#848484", "#01A2D8"]}
+          text="Korisnicko ime:"
+          value={text}
+          handler={textHandler}
+          numbers
+          close={() => setShowModal(false)}
+        />
+      ) : null}
     </div>
   );
 }
