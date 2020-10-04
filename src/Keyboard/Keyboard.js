@@ -1,202 +1,207 @@
-import React, { useState, useEffect } from 'react'
-import './Keyboard.scss'
+import React, { useState, useEffect } from "react";
+import "./Keyboard.scss";
 
-import {CapsLock,Space,Delete,Clear,Prev,Next,Enter} from './SVG.jsx'
+import { CapsLock, Space, Delete, Clear, Prev, Next, Enter } from "./SVG.jsx";
 
-let upperCase = false
-// let isLetters = true
+let upperCase = false;
 
 let letters = [
-  'a',
-  'b',
-  'c',
-  'd',
-  'e',
-  'f',
-  'g',
-  'h',
-  'i',
-  'j',
-  'k',
-  'l',
-  'm',
-  'n',
-  'o',
-  'p',
-  'q',
-  'r',
-  's',
-  't',
-  'u',
-  'v',
-  'w',
-  'x',
-  'y',
-  'z',
-  '!',
-  ',',
-  '.',
-  '@',
-]
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  "!",
+  ",",
+  ".",
+  "@",
+];
 let numbers = [
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '0',
-  ':',
-  ';',
-  '<',
-  '=',
-  '>',
-  '?',
-  '/',
-  '#',
-  '+',
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "0",
+  ":",
+  ";",
+  "<",
+  "=",
+  ">",
+  "?",
+  "/",
+  "#",
+  "+",
   '"',
-  '$',
-  '%',
-  '&',
+  "$",
+  "%",
+  "&",
   "'",
-  '(',
-  ')',
-  '*',
-  '_',
-  '-',
-  '~',
-]
+  "(",
+  ")",
+  "*",
+  "_",
+  "-",
+  "~",
+];
 
 const TVKeyboard = (props) => {
-  const [isLetters,setIsLetters] = useState(props.numbers ? false : true )
+  const [isLetters, setIsLetters] = useState(props.numbers ? false : true);
   //POSITION OF MOVER
-  const [position, setPosition] = useState(0)
-  const [writePosition, setWritePosition] = useState(props.value.length)
+  const [position, setPosition] = useState(0);
+  const [writePosition, setWritePosition] = useState(props.value.length);
   //KEYS
-  const [keys, setKeys] = useState(props.numbers ? numbers : letters)
+  const [keys, setKeys] = useState(props.numbers ? numbers : letters);
 
   useEffect(() => {
     const mover = (e) => {
       switch (e.keyCode) {
         //RIGHT ARROW
         case 39:
-          if(position === 100) writePosition < props.value.length && setWritePosition((p) => p + 1) 
-         else if (position === 9 || position === 19 || position === 29)
-            setPosition((p) => p - 9)
-          else if (position === 34) setPosition(30)
-          else if (position === 37) setPosition(35)
-          else if (position < 37) setPosition((p) => p + 1)
-          break
+          if (position === 100)
+            writePosition < props.value.length &&
+              setWritePosition((p) => p + 1);
+          else if (position === 9 || position === 19 || position === 29)
+            setPosition((p) => p - 9);
+          else if (position === 34) isLetters ? setPosition(30) : setPosition(31);
+          else if (position === 37) setPosition(35);
+          else if (position < 37) setPosition((p) => p + 1);
+          break;
         //LEFT ARROW
         case 37:
-          if(position === 100) writePosition > 0 && setWritePosition((p) => p - 1) 
-          else if (position % 10 === 0 && position < 21) setPosition((p) => p + 9)
-          else if (position === 30) setPosition(34)
-          else if (position === 35) setPosition(37)
-          else if (position > 0) setPosition((p) => p - 1)
-          break
+          if (position === 100)
+            writePosition > 0 && setWritePosition((p) => p - 1);
+          else if (position % 10 === 0 && position < 21)
+            setPosition((p) => p + 9);
+          else if (position === 30) setPosition(34);
+          else if (position === 35) setPosition(37);
+          else if (position === 31 && !isLetters) setPosition(34);
+          else if (position > 0) setPosition((p) => p - 1);
+          break;
         //DOWN ARROW
         case 40:
-          if (position < 20) setPosition((p) => p + 10)
-          else if (position < 22) setPosition(30)
-          else if (position === 22) setPosition(31)
-          else if (position < 26) setPosition(32)
-          else if (position < 28) setPosition(33)
-          else if (position < 30) setPosition(34)
-          else if (position < 32) setPosition(35)
-          else if (position < 33) setPosition(36)
-          else if (position < 35) setPosition(37)
-          else if(position === 100) setPosition(0)
-          break
+          if (position < 20) setPosition((p) => p + 10);
+          else if (position < 22) isLetters ? setPosition(30) : setPosition(31);
+          else if (position === 22) setPosition(31);
+          else if (position < 26) setPosition(32);
+          else if (position < 28) setPosition(33);
+          else if (position < 30) setPosition(34);
+          else if (position < 32) setPosition(35);
+          else if (position < 33) setPosition(36);
+          else if (position < 35) setPosition(37);
+          else if (position === 100) setPosition(0);
+          break;
         //UP ARROW
         case 38:
-          if (position === 37) setPosition(34)
-          else if (position === 36) setPosition(32)
-          else if (position === 35) setPosition(30)
-          else if (position === 34) setPosition(29)
-          else if (position === 33) setPosition(27)
-          else if (position === 32) setPosition(24)
-          else if (position === 31) setPosition(22)
-          else if (position > 9 && position !== 100) setPosition((p) => p - 10)
-          else setPosition(100)
-          break
+          if (position === 37) setPosition(34);
+          else if (position === 36) setPosition(32);
+          else if (position === 35)
+            isLetters ? setPosition(30) : setPosition(31);
+          else if (position === 34) setPosition(29);
+          else if (position === 33) setPosition(27);
+          else if (position === 32) setPosition(24);
+          else if (position === 31) setPosition(22);
+          else if (position > 9 && position !== 100) setPosition((p) => p - 10);
+          else setPosition(100);
+          break;
         //ENTER
         case 13:
-          if (position < 30) addToText(keys[position])
-          actions(position - 30)
-          if (position === 37) close()
-          break
+          if (position < 30) addToText(keys[position]);
+          actions(position - 30);
+          if (position === 37) close();
+          break;
         default:
-          break
+          break;
       }
-    }
+    };
 
-    window.addEventListener('keydown', mover)
+    window.addEventListener("keydown", mover);
 
-    return () => window.removeEventListener('keydown', mover)
-  })
+    return () => window.removeEventListener("keydown", mover);
+  });
 
   const actions = (code) => {
-    if (code === 0) transformKeys()
-    else if (code === 1) numberHandler()
-    else if (code === 2) addToText(`\xa0`)
-    else if (code === 3) deleteFromText()
-    else if (code === 4) clearText()
-    else if (code === 5 && writePosition > 0) setWritePosition((p) => p - 1)
+    if (code === 0) transformKeys();
+    else if (code === 1) numberHandler();
+    else if (code === 2) addToText(`\xa0`);
+    else if (code === 3) deleteFromText();
+    else if (code === 4) clearText();
+    else if (code === 5 && writePosition > 0) setWritePosition((p) => p - 1);
     else if (code === 6 && writePosition < props.value.length)
-      setWritePosition((p) => p + 1)
-  }
+      setWritePosition((p) => p + 1);
+  };
 
   const close = (e) => {
     setTimeout(() => {
-      props.close()
-    }, 1)
-  }
+      props.close();
+    }, 1);
+  };
 
   const numberHandler = () => {
     if (isLetters) {
-      setKeys(numbers)
+      setKeys(numbers);
     } else {
-      setKeys(letters)
+      setKeys(letters);
     }
-    setIsLetters(p => !p)
-  }
+    setIsLetters((p) => !p);
+  };
 
   const transformKeys = () => {
     if (isLetters) {
       const updatedKeys = keys.map((key) =>
-        upperCase ? key.toLowerCase() : key.toUpperCase(),
-      )
-      upperCase = !upperCase
-      setKeys(updatedKeys)
+        upperCase ? key.toLowerCase() : key.toUpperCase()
+      );
+      upperCase = !upperCase;
+      setKeys(updatedKeys);
     }
-  }
+  };
 
   const addToText = (letter) => {
-    setWritePosition((p) => p + 1)
+    setWritePosition((p) => p + 1);
     props.handler(
       props.value.slice(0, writePosition) +
         letter +
-        props.value.slice(writePosition),
-    )
-  }
+        props.value.slice(writePosition)
+    );
+  };
 
   const deleteFromText = () => {
-    writePosition > 0 && setWritePosition((p) => p - 1)
+    writePosition > 0 && setWritePosition((p) => p - 1);
     props.handler(
       props.value.slice(0, writePosition).slice(0, -1) +
-        props.value.slice(writePosition),
-    )
-  }
+        props.value.slice(writePosition)
+    );
+  };
 
   const clearText = () => {
-    setWritePosition(0)
-    props.handler('')
-  }
+    setWritePosition(0);
+    props.handler("");
+  };
 
   //MAPING KEYS TO KEYPADS
   const keypads = keys.map((key, index) => (
@@ -204,7 +209,7 @@ const TVKeyboard = (props) => {
       key={key}
       style={{
         background: position === index ? props.colors[2] : props.colors[1],
-        fontSize:'25px'
+        fontSize: "25px",
       }}
       onMouseOver={() => setPosition(index)}
       onClick={() => addToText(key)}
@@ -212,21 +217,27 @@ const TVKeyboard = (props) => {
     >
       {key}
     </div>
-  ))
-
+  ));
 
   return (
     <div className="TVKeyboard">
       <div className="overlay"></div>
       <div className="keyboard" style={{ background: props.colors[0] }}>
-        <div className="header" style={{ background: props.colors[1] }}>
+        {props.logo ? <div className="header" style={{ background: props.colors[1] }}>
           <img src={props.logo} alt="TV Keyboard" />
-        </div>
+        </div> : null}
 
         <div className="container">
           <div className="input">
             <p>{props.text}</p>
-            <div className="value" style={{ borderColor: position === 100 ? props.colors[2] : props.colors[1] }}>
+            <div
+              className="value"
+              style={{
+                borderColor:
+                  position === 100 ? props.colors[2] : props.colors[1],
+                
+              }}
+            >
               <span>{props.value.slice(0, writePosition)}</span>
               <div className="show">|</div>
               <span>{props.value.slice(writePosition)}</span>
@@ -239,13 +250,15 @@ const TVKeyboard = (props) => {
               key={0}
               style={{
                 background:
-                  position === 30 
+                  position === 30
                     ? props.colors[2]
-                    : isLetters ? props.colors[1] + 'bb' : props.colors[1] + "33",
+                    : isLetters
+                    ? props.colors[1] + "bb"
+                    : props.colors[1] + "33",
               }}
               onClick={() => actions(0)}
-              onMouseOver={() => setPosition(30)}
-              className='key CAPS'
+              onMouseOver={() => isLetters && setPosition(30)}
+              className="key CAPS"
             >
               <CapsLock />
               CAPS
@@ -254,13 +267,11 @@ const TVKeyboard = (props) => {
               key={1}
               style={{
                 background:
-                  position === 31
-                    ? props.colors[2]
-                    : props.colors[1] + 'bb',
+                  position === 31 ? props.colors[2] : props.colors[1] + "bb",
               }}
               onClick={() => actions(1)}
               onMouseOver={() => setPosition(31)}
-              className='key'
+              className="key"
             >
               {isLetters ? "123" : "abc"}
             </div>
@@ -268,13 +279,11 @@ const TVKeyboard = (props) => {
               key={2}
               style={{
                 background:
-                  position === 32
-                    ? props.colors[2]
-                    : props.colors[1] + 'bb',
+                  position === 32 ? props.colors[2] : props.colors[1] + "bb",
               }}
               onClick={() => actions(2)}
               onMouseOver={() => setPosition(32)}
-              className='key SPACE'
+              className="key SPACE"
             >
               <Space />
               SPACE
@@ -283,13 +292,11 @@ const TVKeyboard = (props) => {
               key={3}
               style={{
                 background:
-                  position === 33
-                    ? props.colors[2]
-                    : props.colors[1] + 'bb',
+                  position === 33 ? props.colors[2] : props.colors[1] + "bb",
               }}
               onClick={() => actions(3)}
               onMouseOver={() => setPosition(33)}
-              className='key DELETE'
+              className="key DELETE"
             >
               <Delete />
               DELETE
@@ -298,13 +305,11 @@ const TVKeyboard = (props) => {
               key={4}
               style={{
                 background:
-                  position === 34
-                    ? props.colors[2]
-                    : props.colors[1] + 'bb',
+                  position === 34 ? props.colors[2] : props.colors[1] + "bb",
               }}
               onClick={() => actions(4)}
               onMouseOver={() => setPosition(34)}
-              className='key CLEAR'
+              className="key CLEAR"
             >
               <Clear />
               CLEAR
@@ -313,13 +318,11 @@ const TVKeyboard = (props) => {
               key={5}
               style={{
                 background:
-                  position === 35
-                    ? props.colors[2]
-                    : props.colors[1] + 'bb',
+                  position === 35 ? props.colors[2] : props.colors[1] + "bb",
               }}
               onClick={() => actions(5)}
               onMouseOver={() => setPosition(35)}
-              className={'key PREV'}
+              className="key PREV"
             >
               <Prev />
               PREV
@@ -328,13 +331,11 @@ const TVKeyboard = (props) => {
               key={6}
               style={{
                 background:
-                  position === 36
-                    ? props.colors[2]
-                    : props.colors[1] + 'bb',
+                  position === 36 ? props.colors[2] : props.colors[1] + "bb",
               }}
               onClick={() => actions(6)}
               onMouseOver={() => setPosition(36)}
-              className={'key NEXT'}
+              className="key NEXT"
             >
               NEXT
               <Next />
@@ -343,7 +344,7 @@ const TVKeyboard = (props) => {
               className="key ENTER"
               style={{
                 background:
-                  position === 37 ? props.colors[2] : props.colors[1] + '66',
+                  position === 37 ? props.colors[2] : props.colors[1] + "66",
               }}
               onMouseOver={() => setPosition(37)}
               onClick={() => close()}
@@ -355,7 +356,7 @@ const TVKeyboard = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TVKeyboard
+export default TVKeyboard;

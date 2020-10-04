@@ -18,7 +18,7 @@
   .keyboard {
     position: absolute;
     width: 820px;
-    height: 640px;
+    min-height: 640px;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -47,7 +47,7 @@
 
     .input {
       color: #fff;
-      overflow: hidden;
+
 
       p {
         margin-top: 26px;
@@ -69,11 +69,16 @@
         border-radius: 5px;
         color: #fff;
         transition: .3s;
-
+       
         span {
+          display: flex;
+          justify-content: flex-end;
           line-height: 60px;
           margin: 0;
           letter-spacing: 1;
+          max-width: 100%;
+          overflow: hidden;
+          text-align: right;
         }
 
         &:focus {
